@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "464114750502",
+    "firebase_url": "https://time-tracker-app-4471b.firebaseio.com",
+    "project_id": "time-tracker-app-4471b",
+    "storage_bucket": "time-tracker-app-4471b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464114750502:android:cf19d3dc3ff676281942e7",
+        "android_client_info": {
+          "package_name": "com.binary_developers.time_tracker_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464114750502-ui09msmfa38hh5gkbubks8tapfo95t6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZYDBTVI8z3mbnIXdBR06tQ1fWeYc0IXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464114750502-ui09msmfa38hh5gkbubks8tapfo95t6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
