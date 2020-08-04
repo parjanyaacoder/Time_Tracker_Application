@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:time_tracker_application/Services/auth.dart';
 import 'package:time_tracker_application/app/sign_in/social_sign_in_buttons.dart';
 
@@ -13,8 +14,7 @@ class SignInPage extends StatelessWidget {
     Navigator.pushNamed(
        context, '/signIn'
       );}
-  final AuthBase auth;
-  const SignInPage({@required this.auth,}) ;
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SignInPage extends StatelessWidget {
       initialRoute: '/',
       routes:
           {
-            '/signIn':(context) => EmailSignInPage(auth: auth,)
+            '/signIn':(context) => EmailSignInPage()
           },
       home: Builder(
         builder:(context)=> Scaffold(
@@ -52,7 +52,7 @@ class SignInPage extends StatelessWidget {
             assetName: 'images/google_logo.png',
             text: 'Sign in with Google',
             color: Colors.white,
-            onPressed: _signInWithGoogle,
+            onPressed: ()=> _signInWithGoogle(context),
             textColor: Colors.black87,
           ),
           SizedBox(height: 8.0,),
@@ -82,7 +82,7 @@ class SignInPage extends StatelessWidget {
           SignInButton(
             text: 'Go anonymous',
             color: Colors.lime[300],
-            onPressed: () async => await _signInAnonymously(),
+            onPressed: () async => await _signInAnonymously(context),
             textColor: Colors.black,
           ),
 
@@ -92,8 +92,9 @@ class SignInPage extends StatelessWidget {
     );
   }
 
- Future<void>  _signInAnonymously() async {
+ Future<void>  _signInAnonymously(BuildContext context) async {
     try {
+      final auth = Provider.of<AuthBase>(context);
     await auth.signInAnonymously();
 
     }
@@ -103,8 +104,9 @@ class SignInPage extends StatelessWidget {
   }
 
 
-  void _signInWithGoogle() async {
+  void _signInWithGoogle(BuildContext context) async {
     try {
+      final auth = Provider.of<AuthBase>(context);
       await auth.signInWithGoogle();
 
     }
