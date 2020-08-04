@@ -2,11 +2,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_application/Services/auth.dart';
 import 'package:time_tracker_application/app/sign_in/validators.dart';
 import 'package:time_tracker_application/widgets/form_submit_button.dart';
 import 'package:time_tracker_application/widgets/platform_alert_dialog.dart';
+import 'package:time_tracker_application/widgets/platoform_exception_alert_dialog.dart';
 
 enum EmailSignInFormType {signIn,register}
 
@@ -43,17 +45,12 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         await auth.createUserWithEmailAndPassword(_email, _password);
       Navigator.of(context).pop();
     }
-    catch (e){
-      if(Platform.isIOS){
-
-      }else{
-       PlatformAlertDialog(
+    on PlatformException catch(e){
+      PlatformExceptionAlertDialog(
          title:'Sign in failed',
-         content: e.toString(),
-         defaultActionText: 'Ok',
-         
-       ).show(context);
-      }}
+         exception: e,
+      ).show(context);
+      }
     finally {
       setState(() {
         _isLoading = false;
