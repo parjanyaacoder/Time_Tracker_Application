@@ -9,7 +9,9 @@ import 'package:time_tracker_application/widgets/form_submit_button.dart';
 
 import 'package:time_tracker_application/widgets/platoform_exception_alert_dialog.dart';
 
-enum EmailSignInFormType {signIn,register}
+import 'email_sign_in_model.dart';
+
+
 
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators{
 
