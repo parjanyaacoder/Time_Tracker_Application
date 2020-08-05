@@ -9,6 +9,7 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final auth = Provider.of<AuthBase>(context);
     return StreamBuilder<User>(
       stream: auth.onAuthStateChanged,
@@ -18,9 +19,7 @@ class LandingPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           User user = snapshot.data;
           if (user == null) {
-            return SignInPage(
-
-            );
+            return SignInPage.create(context);
           }
           return HomePage(
           );
