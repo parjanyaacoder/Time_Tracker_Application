@@ -14,7 +14,7 @@ import 'email_sign_in_model.dart';
 
 
 
-class EmailSignInFormBloc extends StatefulWidget with EmailAndPasswordValidators{
+class EmailSignInFormBloc extends StatefulWidget {
 
   @required final EmailSignInBloc bloc;
 
@@ -67,11 +67,11 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
   }
 
   void _emailEditingComplete(EmailSignInModel model) {
-    final newFocus = widget.emailvalidator.isValid(model.email) ? _passwordFocusNode : _emailFocusNode;
+    final newFocus = model.emailvalidator.isValid(model.email) ? _passwordFocusNode : _emailFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 
-  void _toggleFormType(EmailSignInModel model) {
+  void _toggleFormType() {
    widget.bloc.toggleFormType(
    );
     _emailController.clear();
@@ -80,9 +80,6 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
 
   List<Widget> _buildChildren(EmailSignInModel model) {
 
-    final primaryText = model.formType == EmailSignInFormType.signIn ? 'Sign In':'Create an account';
-    final secondaryText = model.formType == EmailSignInFormType.signIn ? 'Need an account? Register' : 'Have an account? Register';
-    bool submitEnabled = widget.emailvalidator.isValid(model.email) && !model.isLoading && widget.emailvalidator.isValid(model.password);
 
     return [
       _buildEmailTextField(model),
@@ -90,20 +87,19 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
       _buildPasswordTextField(model),
       SizedBox(height: 8.0,),
       FormSubmitButton(
-        text:primaryText,
-        onPressed: submitEnabled ? _submit : null,
+        text:model.primaryButtonText,
+        onPressed: model.canSubmit ? _submit : null,
       ),
       SizedBox(height: 8.0,),
       FlatButton(
         child:
-          Text(secondaryText),
-        onPressed: !model.isLoading ? () => _toggleFormType(model) : null,
+          Text(model.secondaryButtonText),
+        onPressed: !model.isLoading ? () => _toggleFormType() : null,
       ),
     ];
   }
 
   TextField _buildPasswordTextField(EmailSignInModel model) {
-    bool passwordValid = model.submitted && !widget.emailvalidator.isValid(model.password);
     return TextField(
       focusNode: _passwordFocusNode,
       controller: _passwordController,
@@ -111,7 +107,7 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
       decoration: InputDecoration(
         labelText: 'Password',
         enabled: model.isLoading == false,
-        errorText: passwordValid ?   widget.invalidPasswordErrorText :null  ,
+        errorText: model.passwordErrorText,
       ),
       obscureText: true,
       onChanged:   widget.bloc.updatePassword,
@@ -123,7 +119,6 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
 
 
   TextField _buildEmailTextField(EmailSignInModel model) {
-    bool emailValid = model.submitted && !widget.emailvalidator.isValid(model.email);
     return TextField(
       focusNode: _emailFocusNode,
       controller: _emailController,
@@ -131,7 +126,7 @@ class _EmailSignInFormBlocState extends State<EmailSignInFormBloc> {
         labelText: 'Email',
         enabled: model.isLoading == false,
         hintText: 'abc@email.com',
-        errorText: emailValid ?   widget.invalidEmailErrorText :null,
+        errorText: model.emailErrorText,
 
       ),
       autocorrect: false,
