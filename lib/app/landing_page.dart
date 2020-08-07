@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker_application/Services/auth.dart';
+import 'package:time_tracker_application/Services/database.dart';
 import 'package:time_tracker_application/app/sign_in/sign_in_page.dart';
 
-import 'home_page.dart';
+import 'home/job_page.dart';
 class LandingPage extends StatelessWidget {
 
   @override
@@ -21,7 +22,10 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           }
-          return HomePage(
+          return Provider<Database>(
+            builder:(_) => FirestoreDatabase(uid:user.uid),
+            child: JobsPage(
+            ),
           );
         }
         else {
